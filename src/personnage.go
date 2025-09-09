@@ -26,6 +26,5 @@ func initCharacter() User {
 	fmt.Println("Entrez votre nom : ")
 	nom, _ := reader.ReadString('\n')
 	nom = strings.TrimSpace(nom)
-	fmt.Println("Bienvenue", nom)
 	return User{nom, "humain", 1, 9, 9, []Inventaire{}}
 }
