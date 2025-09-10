@@ -11,37 +11,37 @@ func Espace(esp int, chaine1 string, chaine2 string) string {
 	}
 	return chaine1 + chaine2 + string(rune(127))
 }
+func centrer(esp int, chaine string) string {
+	esp = esp - len(chaine)
+	r := ""
+	for i := 0; i <= esp/2; i++ {
+		r += " "
+	}
+	r += chaine
+	for i := 0; i <= esp/2+esp%2; i++ {
+		r += " "
+	}
+	return r
+}
 
 func (u User) Affichage() {
 
-	tab := [][]int{
-		{0, 1, 0},
-		{0, 0, 0},
-		{1, 0, 0},
-		{0, 0, 1},
+	type Salles struct {
+		nom        string
+		haut       bool
+		bas        bool
+		gauche     bool
+		droite     bool
+		monstre    string
+		personnage bool
 	}
 
-	salles := [][][]string{{
-		{"______________________________"},
-		{"|    FONTAINE DES ARRIVANTS  |"},
-		{"|                            |"},
-		{"-                            -"},
-		{"                              "},
-		{"-                            -"},
-		{"|                            |"},
-		{"|                            |"},
-		{"|____________________________|"},
-	}, {
-		{"______________________________"},
-		{"|     CHEMIN DE TRAVERSE     |"},
-		{"|                            |"},
-		{"-                            -"},
-		{"                              "},
-		{"-                            -"},
-		{"|                            |"},
-		{"|                            |"},
-		{"|____________________________|"},
-	}}
+	tabSalle := [][]Salles{
+		{Salles{"Fontaine de depart", false, false, false, true, "ogres", true}, Salles{"Fontaine de depart", false, true, true, true, "ogres", false}, Salles{"Fontaine de depart", false, true, true, false, "ogres", false}},
+		{Salles{"Fontaine de depart", false, true, false, true, "ogres", false}, Salles{"Fontaine de depart", true, false, true, false, "ogres", false}, Salles{"Fontaine de depart", true, true, false, false, "ogres", false}},
+		{Salles{"Fontaine de depart", true, true, false, true, "ogres", false}, Salles{"Fontaine de depart", false, true, true, true, "ogres", false}, Salles{"Fontaine de depart", true, true, true, false, "ogres", false}},
+		{Salles{"Fontaine de depart", true, false, false, true, "", false}, Salles{"Fontaine de depart", true, true, true, true, "ogres", false}, Salles{"Fontaine de depart", true, true, true, false, "ogres", false}},
+	}
 
 	fmt.Print("\033[H\033[2J")
 	TabStat := [][]string{
@@ -88,11 +88,33 @@ func (u User) Affichage() {
 			fmt.Print("|", TabStat[i][index], "|")
 		}
 		for j := 0; j < 3; j++ {
-
-			for _, lettre := range salles[tab[i/9][j]][i%9] {
-				fmt.Print(string(lettre))
+			if i%9 == 0 && tabSalle[i/9][j].haut == true {
+				fmt.Print("______________|  |______________")
+			} else if i%9 == 0 && tabSalle[i/9][j].haut == false {
+				fmt.Print("________________________________")
+			} else if i%9 == 1 {
+				fmt.Print("|", centrer(28, tabSalle[i/9][j].nom), "|")
+			} else if i%9 == 2 && tabSalle[i/9][j].personnage == true {
+				fmt.Print("| ¤-->  Vous etes Ici !! <--¤  |")
+			} else if i%9 == 2 || i%9 == 3 {
+				fmt.Print("|                              |")
+			} else if i%9 == 4 && tabSalle[i/9][j].droite == true && tabSalle[i/9][j].gauche == true {
+				fmt.Print("=          Monstres:           =")
+			} else if i%9 == 4 && tabSalle[i/9][j].droite == false && tabSalle[i/9][j].gauche == true {
+				fmt.Print("=          Monstres:           |")
+			} else if i%9 == 4 && tabSalle[i/9][j].droite == true && tabSalle[i/9][j].gauche == false {
+				fmt.Print("|          Monstres:           =")
+			} else if i%9 == 4 && tabSalle[i/9][j].droite == false && tabSalle[i/9][j].gauche == false {
+				fmt.Print("|          Monstres:           |")
+			} else if i%9 == 5 || i%9 == 6 || i%9 == 7 {
+				fmt.Print("|", centrer(28, tabSalle[i/9][j].monstre), "|")
+			} else if i%9 == 8 && tabSalle[i/9][j].bas == true {
+				fmt.Print("|_____________    _____________|")
+			} else if i%9 == 8 && tabSalle[i/9][j].bas == false {
+				fmt.Print("|______________________________|")
 			}
 		}
 		println("")
+
 	}
 }
