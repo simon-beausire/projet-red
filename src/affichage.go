@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func Espace(esp int, chaine1 string, chaine2 string) string {
 	esp -= (len(chaine1) + len(chaine2))
@@ -10,20 +12,37 @@ func Espace(esp int, chaine1 string, chaine2 string) string {
 	return chaine1 + chaine2 + string(rune(127))
 }
 
-type Salle struct {
-	ligne1  string
-	ligne2  string
-	ligne3  string
-	ligne4  string
-	ligne5  string
-	ligne6  string
-	ligne7  string
-	ligne8  string
-	ligne9  string
-	ligne10 string
-}
-
 func (u User) Affichage() {
+
+	tab := [][]int{
+		{0, 1, 0},
+		{0, 0, 0},
+		{1, 0, 0},
+		{0, 0, 1},
+	}
+
+	salles := [][][]string{{
+		{"______________________________"},
+		{"|    FONTAINE DES ARRIVANTS  |"},
+		{"|                            |"},
+		{"-                            -"},
+		{"                              "},
+		{"-                            -"},
+		{"|                            |"},
+		{"|                            |"},
+		{"|____________________________|"},
+	}, {
+		{"______________________________"},
+		{"|     CHEMIN DE TRAVERSE     |"},
+		{"|                            |"},
+		{"-                            -"},
+		{"                              "},
+		{"-                            -"},
+		{"|                            |"},
+		{"|                            |"},
+		{"|____________________________|"},
+	}}
+
 	fmt.Print("\033[H\033[2J")
 	TabStat := [][]string{
 		{"------------------------------"},
@@ -66,7 +85,14 @@ func (u User) Affichage() {
 	}
 	for i := 0; i < 36; i++ {
 		for index := range TabStat[i] {
-			fmt.Println("|", TabStat[i][index], "|")
+			fmt.Print("|", TabStat[i][index], "|")
 		}
+		for j := 0; j < 3; j++ {
+
+			for _, lettre := range salles[tab[i/9][j]][i%9] {
+				fmt.Print(string(lettre))
+			}
+		}
+		println("")
 	}
 }
