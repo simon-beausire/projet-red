@@ -37,10 +37,10 @@ func (u User) Affichage() {
 	}
 
 	tabSalle := [][]Salles{
-		{Salles{"Fontaine de depart", false, false, false, true, "ogres", true}, Salles{"Fontaine de depart", false, true, true, true, "ogres", false}, Salles{"Fontaine de depart", false, true, true, false, "ogres", false}},
-		{Salles{"Fontaine de depart", false, true, false, true, "ogres", false}, Salles{"Fontaine de depart", true, false, true, false, "ogres", false}, Salles{"Fontaine de depart", true, true, false, false, "ogres", false}},
-		{Salles{"Fontaine de depart", true, true, false, true, "ogres", false}, Salles{"Fontaine de depart", false, true, true, true, "ogres", false}, Salles{"Fontaine de depart", true, true, true, false, "ogres", false}},
-		{Salles{"Fontaine de depart", true, false, false, true, "", false}, Salles{"Fontaine de depart", true, true, true, true, "ogres", false}, Salles{"Fontaine de depart", true, true, true, false, "ogres", false}},
+		{Salles{"", false, false, false, false, "", false}, Salles{"", false, false, false, false, "", false}, Salles{"", false, false, false, false, "", false}},
+		{Salles{"", false, false, false, false, "", false}, Salles{"Fontaine de depart", false, false, false, false, "", true}, Salles{"", false, false, false, false, "", false}},
+		{Salles{"", false, false, false, false, "", false}, Salles{"", false, false, false, false, "", false}, Salles{"", false, false, false, false, "", false}},
+		{Salles{"", false, false, false, false, "", false}, Salles{"", false, false, false, false, "", false}, Salles{"", false, false, false, false, "", false}},
 	}
 
 	fmt.Print("\033[H\033[2J")
