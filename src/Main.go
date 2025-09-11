@@ -46,6 +46,8 @@ func commande() {
 }
 func main() {
 	Joueur := initCharacter()
+	fmt.Println(Joueur.InventaireJoueur)
+	Joueur.ajouterInventaire("Potion de Soin", 2)
 	Joueur.Affichage()
 	commande()
 }
