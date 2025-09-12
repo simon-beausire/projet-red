@@ -35,6 +35,10 @@ func (u *User) ajoutervie(pvajoute int) {
 	u.PdvActuel += pvajoute
 }
 
+func (u *User) enlevervie1(pvenlever int) {
+	u.PdvActuel -= pvenlever
+}
+
 func initCharacter() User {
 	fmt.Print("\033[H\033[2J")
 	fmt.Println("------------------------------------------------------------------------------------------------------------------------------------------------------")
