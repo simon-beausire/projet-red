@@ -90,7 +90,7 @@ func (u User) Affichage(tabSalle [][]Salles) {
 			} else if i%9 == 4 && !tabSalle[i/9][j].droite && !tabSalle[i/9][j].gauche {
 				fmt.Print("|          Monstres:           |")
 			} else if i%9 == 5 || i%9 == 6 || i%9 == 7 {
-				fmt.Print("|", centrer(28, tabSalle[i/9][j].monstre), "|")
+				fmt.Print("|", centrer(28, "temp off"), "|")
 			} else if i%9 == 8 && tabSalle[i/9][j].bas {
 				fmt.Print("|_____________    _____________|")
 			} else if i%9 == 8 && !tabSalle[i/9][j].bas {

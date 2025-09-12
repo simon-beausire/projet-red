@@ -53,7 +53,7 @@ type Salles struct {
 	bas        bool
 	gauche     bool
 	droite     bool
-	monstre    string
+	monstre    []Monstre
 	personnage bool
 }
 
@@ -108,7 +108,6 @@ func (u *User) commande(tabSalle *[][]Salles) {
 	commande, _ := reader.ReadString('\n')
 	commande = strings.TrimSpace(commande)
 	split := SplitWhiteSpaces(ToLower(commande))
-	fmt.Println(split[0])
 	switch split[0] {
 	case "goto":
 		u.deplacementJoueur(tabSalle, split[1])
@@ -119,14 +118,15 @@ func (u *User) commande(tabSalle *[][]Salles) {
 }
 func main() {
 	tabSalle := [][]Salles{
-		{Salles{"", false, false, false, false, "", false}, Salles{"", false, true, false, false, "", false}, Salles{"", false, false, false, false, "", false}},
-		{Salles{"", false, false, false, true, "", false}, Salles{"Fontaine de depart", true, true, true, false, "", true}, Salles{"", false, false, false, false, "", false}},
-		{Salles{"", false, false, false, false, "", false}, Salles{"", true, false, false, false, "", false}, Salles{"", false, false, false, false, "", false}},
-		{Salles{"", false, false, false, false, "", false}, Salles{"", false, false, false, false, "", false}, Salles{"", false, false, false, false, "", false}},
+		{Salles{"", false, false, false, false, []Monstre{}, false}, Salles{"", false, true, false, false, []Monstre{}, false}, Salles{"", false, false, false, false, []Monstre{}, false}},
+		{Salles{"", false, false, false, true, []Monstre{}, false}, Salles{"Fontaine de depart", true, true, true, false, []Monstre{}, true}, Salles{"", false, false, false, false, []Monstre{initMonstre("orc")}, false}},
+		{Salles{"", false, false, false, false, []Monstre{}, false}, Salles{"", true, false, false, false, []Monstre{}, false}, Salles{"", false, false, false, false, []Monstre{}, false}},
+		{Salles{"", false, false, false, false, []Monstre{}, false}, Salles{"", false, false, false, false, []Monstre{}, false}, Salles{"", false, false, false, false, []Monstre{}, false}},
 	}
 	Joueur := initCharacter()
 	fmt.Println(Joueur.InventaireJoueur)
 	Joueur.ajouterInventaire("Potion de Soin", 2)
 	Joueur.Affichage(tabSalle)
 	Joueur.commande(&tabSalle)
+	Joueur.ActionMonstre(&tabSalle)
 }
