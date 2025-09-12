@@ -24,24 +24,7 @@ func centrer(esp int, chaine string) string {
 	return r
 }
 
-func (u User) Affichage() {
-
-	type Salles struct {
-		nom        string
-		haut       bool
-		bas        bool
-		gauche     bool
-		droite     bool
-		monstre    string
-		personnage bool
-	}
-
-	tabSalle := [][]Salles{
-		{Salles{"", false, false, false, false, "", false}, Salles{"", false, false, false, false, "", false}, Salles{"", false, false, false, false, "", false}},
-		{Salles{"", false, false, false, false, "", false}, Salles{"Fontaine de depart", false, false, false, false, "", true}, Salles{"", false, false, false, false, "", false}},
-		{Salles{"", false, false, false, false, "", false}, Salles{"", false, false, false, false, "", false}, Salles{"", false, false, false, false, "", false}},
-		{Salles{"", false, false, false, false, "", false}, Salles{"", false, false, false, false, "", false}, Salles{"", false, false, false, false, "", false}},
-	}
+func (u User) Affichage(tabSalle [][]Salles) {
 
 	fmt.Print("\033[H\033[2J")
 	TabStat := [][]string{
