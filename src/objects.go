@@ -14,6 +14,9 @@ func (u *User) potionSoin() {
 		}
 	}
 }
+func (m *Monstre) empoisonerMonstre() {
+	m.enlevervie2(3)
+}
 
 func (m *Monstre) empoisonerMonstre() {
 	m.enlevervie2(3)
