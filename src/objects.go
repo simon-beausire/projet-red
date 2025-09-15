@@ -18,10 +18,6 @@ func (m *Monstre) empoisonerMonstre() {
 	m.enlevervie2(3)
 }
 
-func (m *Monstre) empoisonerMonstre() {
-	m.enlevervie2(3)
-}
-
 func (u *User) potionpoison(empoisonerMonstre func()) {
 	valeur := "potion_de_poison"
 	for i, v := range u.InventaireJoueur {
