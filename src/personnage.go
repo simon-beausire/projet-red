@@ -64,10 +64,10 @@ func initCharacter() User {
 	classe = strings.TrimSpace(classe)
 	switch classe {
 	case "nain":
-		return User{nom, "Nain", 1, 15, 15, []Inventaire{}, 0, 3, []int{1, 1}, 10, 2}
+		return User{nom, "Nain", 1, 75, 125, []Inventaire{}, 0, 3, []int{1, 1}, 10, 2}
 	case "assassin":
-		return User{nom, "Assassin", 1, 10, 10, []Inventaire{}, 0, 3, []int{1, 1}, 10, 4}
+		return User{nom, "Assassin", 1, 50, 100, []Inventaire{}, 0, 3, []int{1, 1}, 10, 4}
 	default:
-		return User{nom, "elf", 1, 10, 10, []Inventaire{Inventaire{"potion de soin", 3}}, 0, 3, []int{1, 1}, 10, 2}
+		return User{nom, "elf", 1, 50, 100, []Inventaire{Inventaire{"potion de soin", 3}}, 0, 3, []int{1, 1}, 10, 2}
 	}
 }

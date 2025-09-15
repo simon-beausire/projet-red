@@ -7,16 +7,17 @@ type Monstre struct {
 	PdvMax      int
 	PdvActuel   int
 	PointAction int
+	poison      int
 }
 
 func initMonstre(espece string) Monstre {
 	switch espece {
 	case "orc":
-		return Monstre{"orc", 5, 5, 2}
+		return Monstre{"orc", 5, 5, 2, 0}
 	case "gobelin":
-		return Monstre{"gobelin", 9, 9, 3}
+		return Monstre{"gobelin", 9, 9, 3, 0}
 	default:
-		return Monstre{"elfs", 2, 2, 1}
+		return Monstre{"elfs", 2, 2, 1, 0}
 	}
 }
 
@@ -45,6 +46,12 @@ func (u User) ActionMonstre(tabSalle *[][]Salles) {
 }
 
 func (u User) attaqueMonstre(monstre Monstre) {
+	if monstre.poison > 0 {
+		monstre.PdvActuel -= 1
+		if monstre.PdvActuel <= 0 {
+			break
+		}
+	}
 	switch monstre.Espece {
 	case "orc":
 		u.enlevervie(2)

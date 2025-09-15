@@ -128,14 +128,17 @@ func (u *User) commande(tabSalle *[][]Salles) {
 		case "goto":
 			u.deplacementJoueur(tabSalle, split[1])
 			u.Affichage(*tabSalle)
-		case "utiliser":
-			switch split[1] {
-			case "soin":
-				println("vous avez utiliser une potion de soin")
-				u.potionSoin()
-			}
-		case "inventaire":
+		case "takepot":
+			println("vous avez utiliser une potion de soin")
+			u.potionSoin()
+		case "acceessInventory":
 			u.AffichageInventaire()
+			i += 1
+		case "menu":
+			u.Affichage(*tabSalle)
+			i += 1
+		case "displayInfo":
+			u.displayInfo
 		default:
 			i += 1
 		}
