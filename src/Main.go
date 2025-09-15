@@ -126,8 +126,14 @@ func (u *User) commande(tabSalle *[][]Salles) {
 	switch split[0] {
 	case "goto":
 		u.deplacementJoueur(tabSalle, split[1])
+	case "utiliser":
+		switch split[1] {
+		case "soin":
+			println("vous avez utiliser une potion de soin")
+			u.potionSoin()
+		}
+	default:
 	}
-	u.Affichage(*tabSalle)
 	u.ActionMonstre(tabSalle)
 	u.commande(tabSalle)
 
@@ -141,7 +147,6 @@ func main() {
 	}
 	Joueur := initCharacter()
 	fmt.Println(Joueur.InventaireJoueur)
-	Joueur.ajouterInventaire("Potion de Soin", 2)
 	Joueur.Affichage(tabSalle)
 	Joueur.commande(&tabSalle)
 }
