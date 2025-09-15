@@ -103,3 +103,55 @@ func (u User) Affichage(tabSalle [][]Salles) {
 
 	}
 }
+
+func (u User) AffichageInventaire() {
+	fmt.Print("\033[H\033[2J")
+	TabStat := [][]string{
+		{"------------------------------"},
+		{Espace(29, "Nom Joueur", u.Nom)},
+		{Espace(29, "Classe", u.Classe)},
+		{Espace(29, "Niveau", string(u.Niveau+48))},
+		{Espace(29, "Points de vie ", string(u.PdvActuel+48))},
+		{"------------------------------"},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "},
+		{"                              "}}
+
+	for i := 0; i < 36; i++ {
+		for index := range TabStat[i] {
+			fmt.Print("|", TabStat[i][index], "|")
+		}
+		if len(u.InventaireJoueur)-1 >= i {
+			fmt.Print("	-", u.InventaireJoueur[i].NomObjet, " :", u.InventaireJoueur[i].Quantite)
+		}
+		fmt.Println()
+	}
+}
