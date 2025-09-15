@@ -40,6 +40,10 @@ func (u *User) enlevervie1(pvenlever int) {
 	u.PdvActuel -= pvenlever
 }
 
+func (m *Monstre) enlevervie2(pvenlever int) {
+	m.PdvActuel -= pvenlever
+}
+
 func initCharacter() User {
 	fmt.Print("\033[H\033[2J")
 	reader := bufio.NewReader(os.Stdin)
