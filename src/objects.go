@@ -13,14 +13,15 @@ func (u *User) potionSoin() {
 	}
 }
 
-func (u *User) potionpoison() {
+func (u *User) potionpoison() bool {
 	valeur := "potion_de_poison"
 	for i, v := range u.InventaireJoueur {
 		if v.NomObjet == valeur {
-
 			u.InventaireJoueur = append(u.InventaireJoueur[:i], u.InventaireJoueur[i+1:]...)
+			return true
 		}
 	}
+	return false
 }
 
 func (u *User) forgeron() {

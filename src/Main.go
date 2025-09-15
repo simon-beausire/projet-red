@@ -118,21 +118,25 @@ func (u *User) deplacementJoueur(tabSalle *[][]Salles, direction string) {
 }
 
 func (u *User) commande(tabSalle *[][]Salles) {
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Print("Que voulez vous faire ? : ")
-	commande, _ := reader.ReadString('\n')
-	commande = strings.TrimSpace(commande)
-	split := SplitWhiteSpaces(ToLower(commande))
-	switch split[0] {
-	case "goto":
-		u.deplacementJoueur(tabSalle, split[1])
-	case "utiliser":
-		switch split[1] {
-		case "soin":
-			println("vous avez utiliser une potion de soin")
-			u.potionSoin()
+	for i := u.PointAction; i > 0; i-- {
+		reader := bufio.NewReader(os.Stdin)
+		fmt.Print("Que voulez vous faire ? : ")
+		commande, _ := reader.ReadString('\n')
+		commande = strings.TrimSpace(commande)
+		split := SplitWhiteSpaces(ToLower(commande))
+		switch split[0] {
+		case "goto":
+			u.deplacementJoueur(tabSalle, split[1])
+			u.Affichage(*tabSalle)
+		case "utiliser":
+			switch split[1] {
+			case "soin":
+				println("vous avez utiliser une potion de soin")
+				u.potionSoin()
+			}
+		default:
+			i += 1
 		}
-	default:
 	}
 	u.ActionMonstre(tabSalle)
 	u.commande(tabSalle)

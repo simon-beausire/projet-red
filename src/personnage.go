@@ -38,9 +38,7 @@ func (u *User) ajoutervie(pvajoute int) {
 }
 
 func (u *User) enlevervie(pvenlever int) {
-	fmt.Println(u.PdvActuel)
 	u.PdvActuel -= pvenlever
-	fmt.Println(u.PdvActuel)
 	u.isDead()
 }
 
