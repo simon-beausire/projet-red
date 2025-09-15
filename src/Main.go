@@ -131,14 +131,15 @@ func (u *User) commande(tabSalle *[][]Salles) {
 		case "takepot":
 			println("vous avez utiliser une potion de soin")
 			u.potionSoin()
-		case "acceessInventory":
+		case "acceessinventory":
 			u.AffichageInventaire()
 			i += 1
 		case "menu":
 			u.Affichage(*tabSalle)
 			i += 1
-		case "displayInfo":
-			u.displayInfo
+		case "displayinfo":
+			fmt.Println("aaaaaa")
+			u.displayInfo()
 		default:
 			i += 1
 		}
