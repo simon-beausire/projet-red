@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 func (u *User) potionSoin() {
 	valeur := "potion_de_soin"
 	for i, v := range u.InventaireJoueur {
@@ -19,4 +21,11 @@ func (u *User) potionpoison() {
 			u.InventaireJoueur = append(u.InventaireJoueur[:i], u.InventaireJoueur[i+1:]...)
 		}
 	}
+}
+
+func (u *User) forgeron() {
+	fmt.Print("\033[H\033[2J")
+	println("bienvenue dans mon magasin que puije pour vous ?")
+	fmt.Println("Clé du Donjon : 100 pieces ")
+
 }

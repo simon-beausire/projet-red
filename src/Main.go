@@ -7,6 +7,13 @@ import (
 	"strings"
 )
 
+func concactTab(tab1 []Monstre, tab2 []Monstre) []Monstre {
+	for _, monstre := range tab2 {
+		tab1 = append(tab1, monstre)
+	}
+	return tab1
+}
+
 func SplitWhiteSpaces(s string) []string {
 	r := []string(nil)
 	temp := ""
@@ -45,6 +52,14 @@ func ToUpper(s string) string {
 		}
 	}
 	return r
+}
+
+func (u *User) isDead() {
+	if u.PdvActuel == 0 {
+		println("vous etes Mort vos points de vie maximum sont diviser par 2")
+		u.PdvActuel = u.PdvMax / 2
+		u.PdvMax = u.PdvMax / 2
+	}
 }
 
 type Salles struct {
@@ -113,13 +128,14 @@ func (u *User) commande(tabSalle *[][]Salles) {
 		u.deplacementJoueur(tabSalle, split[1])
 	}
 	u.Affichage(*tabSalle)
+	u.ActionMonstre(tabSalle)
 	u.commande(tabSalle)
 
 }
 func main() {
 	tabSalle := [][]Salles{
 		{Salles{"", false, false, false, false, []Monstre{}, false}, Salles{"", false, true, false, false, []Monstre{}, false}, Salles{"", false, false, false, false, []Monstre{}, false}},
-		{Salles{"", false, false, false, true, []Monstre{}, false}, Salles{"Fontaine de depart", true, true, true, false, []Monstre{}, true}, Salles{"", false, false, false, false, []Monstre{initMonstre("orc")}, false}},
+		{Salles{"", false, false, false, true, []Monstre{}, false}, Salles{"Fontaine de depart", true, true, true, false, []Monstre{initMonstre("orc")}, true}, Salles{"", false, false, false, false, []Monstre{initMonstre("orc")}, false}},
 		{Salles{"", false, false, false, false, []Monstre{}, false}, Salles{"", true, false, false, false, []Monstre{}, false}, Salles{"", false, false, false, false, []Monstre{}, false}},
 		{Salles{"", false, false, false, false, []Monstre{}, false}, Salles{"", false, false, false, false, []Monstre{}, false}, Salles{"", false, false, false, false, []Monstre{}, false}},
 	}
@@ -128,5 +144,4 @@ func main() {
 	Joueur.ajouterInventaire("Potion de Soin", 2)
 	Joueur.Affichage(tabSalle)
 	Joueur.commande(&tabSalle)
-	Joueur.ActionMonstre(&tabSalle)
 }

@@ -22,6 +22,7 @@ type User struct {
 	PlaceInventaire   int
 	MaxInventaire     int
 	emplacementJoueur []int
+	argentJoueur      int
 }
 
 func (u User) ajouterInventaire(NomObjet string, Quantite int) {
@@ -41,37 +42,9 @@ func (u *User) enlevervie1(pvenlever int) {
 
 func initCharacter() User {
 	fmt.Print("\033[H\033[2J")
-	fmt.Println("------------------------------------------------------------------------------------------------------------------------------------------------------")
-	fmt.Println("  |                                            |    |                                            |    |                                            |  ")
-	fmt.Println("  |                                            |    |                                            |    |                                            |  ")
-	fmt.Println("  |                                            |    |                                            |    |                                            |  ")
-	fmt.Println("  |                                            |    |                                            |    |                                            |  ")
-	fmt.Println("  |                                            |    |                                            |    |                                            |  ")
-	fmt.Println("  |                                            |    |                                            |    |                                            |  ")
-	fmt.Println("  |                                            |    |                                            |    |                                            |  ")
-	fmt.Println("  |                                            |    |                                            |    |                                            |  ")
-	fmt.Println("  |                                            |    |                                            |    |                                            |  ")
-	fmt.Println("  |                                            |    |                                            |    |                                            |  ")
-	fmt.Println("  |                                            |    |                                            |    |                                            |  ")
-	fmt.Println("  |                                            |    |                                            |    |                                            |  ")
-	fmt.Println("  |                                            |    |                                            |    |                                            |  ")
-	fmt.Println("  |                                            |    |                                            |    |                                            |  ")
-	fmt.Println("  |                                            |    |                                            |    |                                            |  ")
-	fmt.Println("  |                                            |    |                                            |    |                                            |  ")
-	fmt.Println("  |                                            |    |                                            |    |                                            |  ")
-	fmt.Println("  |                                            |    |                                            |    |                                            |  ")
-	fmt.Println("  |                                            |    |                                            |    |                                            |  ")
-	fmt.Println("  |                                            |    |                                            |    |                                            |  ")
-	fmt.Println("  |                                            |    |                                            |    |                                            |  ")
-	fmt.Println("  |                                            |    |                                            |    |                                            |  ")
-	fmt.Println("  |                                            |    |                                            |    |                                            |  ")
-	fmt.Println("  |                                            |    |                                            |    |                                            |  ")
-	fmt.Println("  |                                            |    |                                            |    |                                            |  ")
-	fmt.Println("------------------------------------------------------------------------------------------------------------------------------------------------------")
-
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Print("Entrez votre nom : ")
 	nom, _ := reader.ReadString('\n')
 	nom = strings.TrimSpace(nom)
-	return User{nom, "humain", 1, 9, 9, []Inventaire{}, 0, 3, []int{1, 1}}
+	return User{nom, "humain", 1, 9, 9, []Inventaire{}, 0, 3, []int{1, 1}, 10}
 }
