@@ -52,6 +52,7 @@ func initCharacter() User {
 	fmt.Print("Entrez votre nom : ")
 	nom, _ := reader.ReadString('\n')
 	nom = strings.TrimSpace(nom)
+	nom = ToUpper(string(nom[0])) + ToLower((string(nom[1:])))
 	fmt.Print("\033[H\033[2J")
 	reader = bufio.NewReader(os.Stdin)
 	fmt.Println("classes :")

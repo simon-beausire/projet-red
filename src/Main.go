@@ -120,7 +120,7 @@ func (u *User) deplacementJoueur(tabSalle *[][]Salles, direction string) {
 func (u *User) commande(tabSalle *[][]Salles) {
 	for i := u.PointAction; i > 0; i-- {
 		reader := bufio.NewReader(os.Stdin)
-		fmt.Print("Que voulez vous faire ? : ")
+		fmt.Print("Action restante: ", rune(i), " | Que voulez vous faire ? : ")
 		commande, _ := reader.ReadString('\n')
 		commande = strings.TrimSpace(commande)
 		split := SplitWhiteSpaces(ToLower(commande))

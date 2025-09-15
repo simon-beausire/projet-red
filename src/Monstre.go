@@ -38,6 +38,7 @@ func (u User) ActionMonstre(tabSalle *[][]Salles) {
 		(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]+1].monstre = []Monstre{}
 	}
 	u.Affichage(*tabSalle)
+	fmt.Println("Des monstres ce déplace sur vous")
 	for _, monstre := range (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre {
 		u.attaqueMonstre(monstre)
 	}
@@ -55,4 +56,8 @@ func (u User) attaqueMonstre(monstre Monstre) {
 		u.enlevervie(3)
 		fmt.Println("Un elf vous inflige 3 de dégats")
 	}
+}
+
+func (u User) monstreRetirerVie(monstre *Monstre, dgts int) {
+	monstre.PdvActuel = monstre.PdvActuel - dgts
 }
