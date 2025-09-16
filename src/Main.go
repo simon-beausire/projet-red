@@ -129,9 +129,15 @@ func (u *User) commande(tabSalle *[][]Salles) {
 			u.deplacementJoueur(tabSalle, split[1])
 			u.Affichage(*tabSalle)
 		case "takepot":
-			println("vous avez utiliser une potion de soin")
-			u.potionSoin()
-		case "acceessinventory":
+			if u.inInventaire("potion de soin") >= 0 {
+				u.potionSoin()
+				u.AffichageInventaire()
+				println("vous avez utiliser une potion de soin")
+			} else {
+				fmt.Println("Vous ne possedez aucune potion de soin dans votre inventaire")
+				i += 1
+			}
+		case "accessinventory":
 			u.AffichageInventaire()
 			i += 1
 		case "retour":
@@ -139,6 +145,8 @@ func (u *User) commande(tabSalle *[][]Salles) {
 			i += 1
 		case "displayinfo":
 			u.displayInfo()
+		case "quiter":
+			return
 		default:
 			i += 1
 		}

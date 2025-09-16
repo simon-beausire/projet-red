@@ -8,15 +8,10 @@ import (
 )
 
 func (u *User) potionSoin() {
-	valeur := "potion_de_soin"
-	for i, v := range u.InventaireJoueur {
-		if v.NomObjet == valeur {
-			u.ajoutervie(50)
-			u.InventaireJoueur = append(u.InventaireJoueur[:i], u.InventaireJoueur[i+1:]...)
-
-		}
-	}
+	u.ajoutervie(50)
+	u.retirerInventaire("potion de soin", 1)
 }
+
 func (m *Monstre) empoisonerMonstre() {
 	m.enlevervie2(3)
 }
@@ -79,22 +74,22 @@ func (u *User) marchand() {
 	case "vendre":
 		switch split[1] {
 		case "plume":
-			if u.inInventaire("plume de corbeau") > 0 {
+			if u.inInventaire("plume de corbeau") >= 0 {
 				u.retirerInventaire("plume de corbeau", 1)
 				u.argentJoueur += 1
 			}
 		case "cuir":
-			if u.inInventaire("cuir de sanglier") > 0 {
+			if u.inInventaire("cuir de sanglier") >= 0 {
 				u.retirerInventaire("cuir de sanglier", 1)
 				u.argentJoueur += 3
 			}
 		case "fourrure":
-			if u.inInventaire("fourrure de Loup") > 0 {
+			if u.inInventaire("fourrure de Loup") >= 0 {
 				u.retirerInventaire("fourrure de Loup", 1)
 				u.argentJoueur += 4
 			}
 		case "peau":
-			if u.inInventaire("Peau de troll") > 0 {
+			if u.inInventaire("Peau de troll") >= 0 {
 				u.retirerInventaire("Peau de troll", 1)
 				u.argentJoueur += 7
 			}
