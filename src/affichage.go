@@ -38,12 +38,12 @@ func (u User) Affichage(tabSalle [][]Salles) {
 		{"------------------------------"},
 		{"                              "},
 		{"                              "},
-		{"                              "},
-		{"                              "},
-		{"                              "},
-		{"                              "},
-		{"                              "},
-		{"                              "},
+		{"goto direction                "},
+		{"accessinventory               "},
+		{"retour                        "},
+		{"displayinfo                   "},
+		{"quiter                        "},
+		{"takepot                       "},
 		{"                              "},
 		{"                              "},
 		{"                              "},
@@ -115,6 +115,7 @@ func (u User) Affichage(tabSalle [][]Salles) {
 
 func (u User) AffichageInventaire() {
 	fmt.Print("\033[H\033[2J")
+	fmt.Println(u.InventaireJoueur)
 	TabStat := [][]string{
 		{"------------------------------"},
 		{Espace(29, "Nom Joueur", u.Nom)},
@@ -158,7 +159,7 @@ func (u User) AffichageInventaire() {
 		for index := range TabStat[i] {
 			fmt.Print("|", TabStat[i][index], "|")
 		}
-		if len(u.InventaireJoueur)-1 >= i {
+		if len(u.InventaireJoueur) > i {
 			fmt.Print("	-", u.InventaireJoueur[i].NomObjet, " :", u.InventaireJoueur[i].Quantite)
 		}
 		fmt.Println()

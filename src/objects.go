@@ -7,9 +7,17 @@ import (
 	"strings"
 )
 
-func (u *User) potionSoin() {
-	u.ajoutervie(50)
-	u.retirerInventaire("potion de soin", 1)
+func (u *User) potionSoin() bool {
+	if u.PdvActuel != u.PdvMax {
+		u.ajoutervie(50)
+		u.retirerInventaire("potion de soin", 1)
+		if u.PdvActuel > u.PdvMax {
+			u.PdvActuel = u.PdvMax
+		}
+		return true
+	}
+	fmt.Println("Vie deja au maximum")
+	return false
 }
 
 func (m *Monstre) empoisonerMonstre() {
@@ -33,11 +41,12 @@ func (u *User) testAchat(prix int, NomObjet string) {
 		fmt.Println("Plus de place dans l'inventaire")
 	} else {
 		u.argentJoueur -= prix
+		fmt.Println("Vous avez acheter ", NomObjet, "en echange de ", prix, "pieces")
 	}
 
 }
 
-func (u *User) marchand() {
+func (u *User) marchand(tabSalle *[][]Salles) {
 	fmt.Print("\033[H\033[2J")
 	fmt.Println("bienvenue dans mon magasin, que puije pour vous ?")
 	fmt.Println("----------ACHETER---------")
@@ -52,48 +61,51 @@ func (u *User) marchand() {
 	fmt.Println("Peau de troll: 7 piece")
 	fmt.Println("Pour acheter un objet: acheter nomobjet")
 	fmt.Println("Pour vendre un objet: vendre nomobjet")
-	reader := bufio.NewReader(os.Stdin)
-	commande, _ := reader.ReadString('\n')
-	commande = strings.TrimSpace(commande)
-	split := SplitWhiteSpaces(ToLower(commande))
-
-	switch split[0] {
-	case "acheter":
-		switch split[1] {
-		case "potion":
-			if split[2] == "soin" {
-				u.testAchat(3, "potion de soin")
-			} else if split[2] == "poison" && u.argentJoueur >= 6 {
-				u.testAchat(6, "potion de poison")
+	for true {
+		reader := bufio.NewReader(os.Stdin)
+		commande, _ := reader.ReadString('\n')
+		commande = strings.TrimSpace(commande)
+		split := SplitWhiteSpaces(ToLower(commande))
+		switch split[0] {
+		case "acheter":
+			switch split[1] {
+			case "potion":
+				if split[2] == "soin" {
+					u.testAchat(3, "potion de soin")
+				} else if split[2] == "poison" && u.argentJoueur >= 6 {
+					u.testAchat(6, "potion de poison")
+				}
+			case "sort":
+				u.testAchat(25, "sort boule de feu")
+			case "clé":
+				u.testAchat(100, "cle du donjon")
 			}
-		case "sort":
-			u.testAchat(25, "sort boule de feu")
-		case "clé":
-			u.testAchat(100, "cle du donjon")
+		case "vendre":
+			switch split[1] {
+			case "plume":
+				if u.inInventaire("plume de corbeau") >= 0 {
+					u.retirerInventaire("plume de corbeau", 1)
+					u.argentJoueur += 1
+				}
+			case "cuir":
+				if u.inInventaire("cuir de sanglier") >= 0 {
+					u.retirerInventaire("cuir de sanglier", 1)
+					u.argentJoueur += 3
+				}
+			case "fourrure":
+				if u.inInventaire("fourrure de Loup") >= 0 {
+					u.retirerInventaire("fourrure de Loup", 1)
+					u.argentJoueur += 4
+				}
+			case "peau":
+				if u.inInventaire("Peau de troll") >= 0 {
+					u.retirerInventaire("Peau de troll", 1)
+					u.argentJoueur += 7
+				}
+			}
+		case "retour":
+			u.Affichage(*tabSalle)
+			u.commande(tabSalle)
 		}
-	case "vendre":
-		switch split[1] {
-		case "plume":
-			if u.inInventaire("plume de corbeau") >= 0 {
-				u.retirerInventaire("plume de corbeau", 1)
-				u.argentJoueur += 1
-			}
-		case "cuir":
-			if u.inInventaire("cuir de sanglier") >= 0 {
-				u.retirerInventaire("cuir de sanglier", 1)
-				u.argentJoueur += 3
-			}
-		case "fourrure":
-			if u.inInventaire("fourrure de Loup") >= 0 {
-				u.retirerInventaire("fourrure de Loup", 1)
-				u.argentJoueur += 4
-			}
-		case "peau":
-			if u.inInventaire("Peau de troll") >= 0 {
-				u.retirerInventaire("Peau de troll", 1)
-				u.argentJoueur += 7
-			}
-		}
-
 	}
 }

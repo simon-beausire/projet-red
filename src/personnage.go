@@ -35,16 +35,20 @@ func (u User) inInventaire(NomObjet string) int {
 	return -1
 }
 
-func (u User) ajouterInventaire(NomObjet string, Quantite int) bool {
+func (u *User) ajouterInventaire(NomObjet string, Quantite int) bool {
 	if u.PlaceInventaire < u.MaxInventaire {
-		u.InventaireJoueur = append(u.InventaireJoueur, Inventaire{NomObjet, Quantite})
+		if u.inInventaire(NomObjet) == -1 {
+			u.InventaireJoueur = append(u.InventaireJoueur, Inventaire{NomObjet, Quantite})
+		} else {
+			u.InventaireJoueur[u.inInventaire(NomObjet)].Quantite += Quantite
+		}
 		return true
 	}
 	return false
 }
 func (u *User) retirerInventaire(NomObjet string, Quantite int) {
 	if u.inInventaire(NomObjet) == -1 {
-		fmt.Println("Action Impossible: l'Objet n'est pas orésent dans l'inventaire")
+		fmt.Println("Action Impossible: l'Objet n'est pas présent dans l'inventaire")
 	} else if u.InventaireJoueur[u.inInventaire(NomObjet)].Quantite == 1 {
 		u.InventaireJoueur = append(u.InventaireJoueur[:u.inInventaire(NomObjet)], u.InventaireJoueur[(u.inInventaire(NomObjet)+1):]...)
 	} else {
