@@ -45,13 +45,17 @@ func (u User) ajouterInventaire(NomObjet string, Quantite int) bool {
 func (u *User) retirerInventaire(NomObjet string, Quantite int) {
 	if u.inInventaire(NomObjet) == -1 {
 		fmt.Println("Action Impossible: l'Objet n'est pas orésent dans l'inventaire")
-	} else {
+	} else if u.InventaireJoueur[u.inInventaire(NomObjet)].Quantite == 1 {
 		u.InventaireJoueur = append(u.InventaireJoueur[:u.inInventaire(NomObjet)], u.InventaireJoueur[(u.inInventaire(NomObjet)+1):]...)
+	} else {
+		u.InventaireJoueur[u.inInventaire(NomObjet)].Quantite = u.InventaireJoueur[u.inInventaire(NomObjet)].Quantite - 1
 	}
 }
 
 func (u *User) ajoutervie(pvajoute int) {
+	fmt.Println(u.PdvActuel)
 	u.PdvActuel += pvajoute
+	fmt.Println(u.PdvActuel)
 }
 
 func (u *User) enlevervie(pvenlever int) {
@@ -69,6 +73,9 @@ func initCharacter() User {
 	fmt.Print("Entrez votre nom : ")
 	nom, _ := reader.ReadString('\n')
 	nom = strings.TrimSpace(nom)
+	if nom == "" {
+		return initCharacter()
+	}
 	nom = ToUpper(string(nom[0])) + ToLower((string(nom[1:])))
 	fmt.Print("\033[H\033[2J")
 	reader = bufio.NewReader(os.Stdin)

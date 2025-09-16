@@ -22,24 +22,26 @@ func initMonstre(espece string) Monstre {
 }
 
 func (u User) ActionMonstre(tabSalle *[][]Salles) {
-	if (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].bas {
-		(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre = concactTab((*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre, (*tabSalle)[u.emplacementJoueur[0]+1][u.emplacementJoueur[1]].monstre)
-		(*tabSalle)[u.emplacementJoueur[0]+1][u.emplacementJoueur[1]].monstre = []Monstre{}
+	if len((*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre) != 3 {
+		if (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].bas {
+			(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre = concactTab((*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre, (*tabSalle)[u.emplacementJoueur[0]+1][u.emplacementJoueur[1]].monstre)
+			(*tabSalle)[u.emplacementJoueur[0]+1][u.emplacementJoueur[1]].monstre = []Monstre{}
+		}
+		if (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].haut {
+			(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre = concactTab((*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre, (*tabSalle)[u.emplacementJoueur[0]-1][u.emplacementJoueur[1]].monstre)
+			(*tabSalle)[u.emplacementJoueur[0]-1][u.emplacementJoueur[1]].monstre = []Monstre{}
+		}
+		if (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].gauche {
+			(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre = concactTab((*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre, (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]-1].monstre)
+			(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]-1].monstre = []Monstre{}
+		}
+		if (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].droite {
+			(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre = concactTab((*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre, (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]+1].monstre)
+			(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]+1].monstre = []Monstre{}
+		}
+		u.Affichage(*tabSalle)
+		fmt.Println("Des monstres ce déplace sur vous")
 	}
-	if (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].haut {
-		(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre = concactTab((*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre, (*tabSalle)[u.emplacementJoueur[0]-1][u.emplacementJoueur[1]].monstre)
-		(*tabSalle)[u.emplacementJoueur[0]-1][u.emplacementJoueur[1]].monstre = []Monstre{}
-	}
-	if (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].gauche {
-		(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre = concactTab((*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre, (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]-1].monstre)
-		(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]-1].monstre = []Monstre{}
-	}
-	if (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].droite {
-		(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre = concactTab((*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre, (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]+1].monstre)
-		(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]+1].monstre = []Monstre{}
-	}
-	u.Affichage(*tabSalle)
-	fmt.Println("Des monstres ce déplace sur vous")
 	for _, monstre := range (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre {
 		u.attaqueMonstre(monstre)
 	}
