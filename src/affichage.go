@@ -201,7 +201,7 @@ func (u User) displayInfo() {
 		for index := range TabStat[i] {
 			fmt.Print("|", TabStat[i][index], "|")
 		}
-		fmt.Println(u.argentJoueur)
-		fmt.Println(u.InventaireJoueur)
 	}
+	fmt.Println(u.argentJoueur)
+	fmt.Println()
 }

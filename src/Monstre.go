@@ -46,12 +46,6 @@ func (u User) ActionMonstre(tabSalle *[][]Salles) {
 }
 
 func (u User) attaqueMonstre(monstre Monstre) {
-	if monstre.poison > 0 {
-		monstre.PdvActuel -= 1
-		if monstre.PdvActuel <= 0 {
-			break
-		}
-	}
 	switch monstre.Espece {
 	case "orc":
 		u.enlevervie(2)
