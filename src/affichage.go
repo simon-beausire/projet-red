@@ -27,12 +27,14 @@ func centrer(esp int, chaine string) string {
 func (u User) Affichage(tabSalle [][]Salles) {
 
 	fmt.Print("\033[H\033[2J")
+	niveau := fmt.Sprintf("%d", u.Niveau)
+	pdv := fmt.Sprintf("%d", u.PdvActuel)
 	TabStat := [][]string{
 		{"------------------------------"},
 		{Espace(29, "Nom Joueur", u.Nom)},
 		{Espace(29, "Classe", u.Classe)},
-		{Espace(29, "Niveau", string(u.Niveau+48))},
-		{Espace(29, "Points de vie ", string(u.PdvActuel+48))},
+		{Espace(29, "Niveau", niveau)},
+		{Espace(29, "Points de vie ", pdv)},
 		{"------------------------------"},
 		{"                              "},
 		{"                              "},
@@ -89,8 +91,15 @@ func (u User) Affichage(tabSalle [][]Salles) {
 				fmt.Print("|          Monstres:           =")
 			} else if i%9 == 4 && !tabSalle[i/9][j].droite && !tabSalle[i/9][j].gauche {
 				fmt.Print("|          Monstres:           |")
-			} else if (i%9 == 5 || i%9 == 6 || i%9 == 7) && len(tabSalle[i/9][j].monstre) > 0 {
-				fmt.Print("|", centrer(28, "a"), "|")
+			} else if i%9 == 5 && len(tabSalle[i/9][j].monstre) > 0 {
+				pdv := fmt.Sprintf("%d", tabSalle[i/9][j].monstre[0].PdvActuel)
+				fmt.Print("|  ", Espace(23, tabSalle[i/9][j].monstre[0].Espece, pdv), "pv  |")
+			} else if i%9 == 6 && len(tabSalle[i/9][j].monstre) > 1 {
+				pdv := fmt.Sprintf("%d", tabSalle[i/9][j].monstre[1].PdvActuel)
+				fmt.Print("|  ", Espace(23, tabSalle[i/9][j].monstre[1].Espece, pdv), "pv  |")
+			} else if i%9 == 7 && len(tabSalle[i/9][j].monstre) > 2 {
+				pdv := fmt.Sprintf("%d", tabSalle[i/9][j].monstre[2].PdvActuel)
+				fmt.Print("|  ", Espace(23, tabSalle[i/9][j].monstre[2].Espece, pdv), "pv  |")
 			} else if i%9 == 5 || i%9 == 6 || i%9 == 7 {
 				fmt.Print("|                              |")
 			} else if i%9 == 8 && tabSalle[i/9][j].bas {
