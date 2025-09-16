@@ -26,11 +26,28 @@ type User struct {
 	PointAction       int
 }
 
-func (u User) ajouterInventaire(NomObjet string, Quantite int) {
+func (u User) inInventaire(NomObjet string) int {
+	for index, objet := range u.InventaireJoueur {
+		if objet.NomObjet == NomObjet {
+			return index
+		}
+	}
+	return -1
+}
+
+func (u User) ajouterInventaire(NomObjet string, Quantite int) bool {
 	if u.PlaceInventaire < u.MaxInventaire {
 		u.InventaireJoueur = append(u.InventaireJoueur, Inventaire{NomObjet, Quantite})
+		return true
 	}
-	fmt.Println(u.InventaireJoueur)
+	return false
+}
+func (u *User) retirerInventaire(NomObjet string, Quantite int) {
+	if u.inInventaire(NomObjet) == -1 {
+		fmt.Println("Action Impossible: l'Objet n'est pas orésent dans l'inventaire")
+	} else {
+		u.InventaireJoueur = append(u.InventaireJoueur[:u.inInventaire(NomObjet)], u.InventaireJoueur[(u.inInventaire(NomObjet)+1):]...)
+	}
 }
 
 func (u *User) ajoutervie(pvajoute int) {
@@ -64,10 +81,10 @@ func initCharacter() User {
 	classe = strings.TrimSpace(classe)
 	switch classe {
 	case "nain":
-		return User{nom, "Nain", 1, 75, 125, []Inventaire{}, 0, 3, []int{1, 1}, 10, 2}
+		return User{nom, "Nain", 1, 60, 120, []Inventaire{}, 0, 10, []int{1, 1}, 100, 2}
 	case "assassin":
-		return User{nom, "Assassin", 1, 50, 100, []Inventaire{}, 0, 3, []int{1, 1}, 10, 4}
+		return User{nom, "Assassin", 1, 50, 100, []Inventaire{}, 0, 10, []int{1, 1}, 100, 4}
 	default:
-		return User{nom, "elf", 1, 50, 100, []Inventaire{Inventaire{"potion de soin", 3}}, 0, 3, []int{1, 1}, 10, 2}
+		return User{nom, "elf", 1, 40, 80, []Inventaire{Inventaire{"potion de soin", 3}}, 0, 10, []int{1, 1}, 100, 2}
 	}
 }

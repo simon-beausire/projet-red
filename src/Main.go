@@ -134,12 +134,14 @@ func (u *User) commande(tabSalle *[][]Salles) {
 		case "acceessinventory":
 			u.AffichageInventaire()
 			i += 1
-		case "menu":
+		case "retour":
 			u.Affichage(*tabSalle)
 			i += 1
 		case "displayinfo":
 			fmt.Println("aaaaaa")
 			u.displayInfo()
+		case "quiter":
+			return
 		default:
 			i += 1
 		}
