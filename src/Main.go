@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -156,6 +157,13 @@ func (u *User) commande(tabSalle *[][]Salles) {
 		case "forgeron":
 			u.forgeron(tabSalle)
 			i += 1
+		case "skill":
+			switch split[1] {
+			case "coupdepoing":
+				index, _ := strconv.Atoi(split[2])
+				u.coupDePoing(tabSalle, index-1)
+			}
+		case "pass":
 		default:
 			i += 1
 		}
@@ -172,7 +180,6 @@ func main() {
 		{Salles{"", false, false, false, false, []Monstre{}, false}, Salles{"", false, false, false, false, []Monstre{}, false}, Salles{"", false, false, false, false, []Monstre{}, false}},
 	}
 	Joueur := initCharacter()
-	fmt.Println(Joueur.InventaireJoueur)
 	Joueur.Affichage(tabSalle)
 	Joueur.commande(&tabSalle)
 }

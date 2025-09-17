@@ -93,13 +93,13 @@ func (u User) Affichage(tabSalle [][]Salles) {
 				fmt.Print("|          Monstres:           |")
 			} else if i%9 == 5 && len(tabSalle[i/9][j].monstre) > 0 {
 				pdv := fmt.Sprintf("%d", tabSalle[i/9][j].monstre[0].PdvActuel)
-				fmt.Print("|  ", Espace(23, tabSalle[i/9][j].monstre[0].Espece, pdv), "pv  |")
+				fmt.Print("|  1: ", Espace(20, tabSalle[i/9][j].monstre[0].Espece, pdv), "pv  |")
 			} else if i%9 == 6 && len(tabSalle[i/9][j].monstre) > 1 {
 				pdv := fmt.Sprintf("%d", tabSalle[i/9][j].monstre[1].PdvActuel)
-				fmt.Print("|  ", Espace(23, tabSalle[i/9][j].monstre[1].Espece, pdv), "pv  |")
+				fmt.Print("|  2: ", Espace(20, tabSalle[i/9][j].monstre[1].Espece, pdv), "pv  |")
 			} else if i%9 == 7 && len(tabSalle[i/9][j].monstre) > 2 {
 				pdv := fmt.Sprintf("%d", tabSalle[i/9][j].monstre[2].PdvActuel)
-				fmt.Print("|  ", Espace(23, tabSalle[i/9][j].monstre[2].Espece, pdv), "pv  |")
+				fmt.Print("|  3: ", Espace(20, tabSalle[i/9][j].monstre[2].Espece, pdv), "pv  |")
 			} else if i%9 == 5 || i%9 == 6 || i%9 == 7 {
 				fmt.Print("|                              |")
 			} else if i%9 == 8 && tabSalle[i/9][j].bas {
