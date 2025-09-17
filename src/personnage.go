@@ -7,6 +7,12 @@ import (
 	"strings"
 )
 
+type PieceEquipement struct {
+	tete  []Inventaire
+	torse []Inventaire
+	pieds []Inventaire
+}
+
 type Inventaire struct {
 	NomObjet string
 	Quantite int
@@ -24,6 +30,7 @@ type User struct {
 	emplacementJoueur []int
 	argentJoueur      int
 	PointAction       int
+	Equipement        PieceEquipement
 }
 
 func (u User) inInventaire(NomObjet string) int {
@@ -35,21 +42,38 @@ func (u User) inInventaire(NomObjet string) int {
 	return -1
 }
 
-func (u User) ajouterInventaire(NomObjet string, Quantite int) bool {
+func (u *User) ajouterInventaire(NomObjet string, Quantite int) bool {
 	if u.PlaceInventaire < u.MaxInventaire {
-		u.InventaireJoueur = append(u.InventaireJoueur, Inventaire{NomObjet, Quantite})
+		if u.inInventaire(NomObjet) == -1 {
+			u.InventaireJoueur = append(u.InventaireJoueur, Inventaire{NomObjet, Quantite})
+			u.PlaceInventaire += Quantite
+		} else {
+			u.InventaireJoueur[u.inInventaire(NomObjet)].Quantite += Quantite
+			u.PlaceInventaire += Quantite
+		}
 		return true
 	}
 	return false
 }
 func (u *User) retirerInventaire(NomObjet string, Quantite int) {
 	if u.inInventaire(NomObjet) == -1 {
-		fmt.Println("Action Impossible: l'Objet n'est pas orésent dans l'inventaire")
+		fmt.Println("Action Impossible: l'Objet n'est pas présent dans l'inventaire")
 	} else if u.InventaireJoueur[u.inInventaire(NomObjet)].Quantite == 1 {
 		u.InventaireJoueur = append(u.InventaireJoueur[:u.inInventaire(NomObjet)], u.InventaireJoueur[(u.inInventaire(NomObjet)+1):]...)
+		u.PlaceInventaire -= Quantite
 	} else {
 		u.InventaireJoueur[u.inInventaire(NomObjet)].Quantite = u.InventaireJoueur[u.inInventaire(NomObjet)].Quantite - 1
+		u.PlaceInventaire -= Quantite
 	}
+}
+func (u *User) upgradeInventorySlot() bool {
+	if u.MaxInventaire != 40 {
+		u.MaxInventaire += 10
+		return true
+	} else {
+		return false
+	}
+
 }
 
 func (u *User) ajoutervie(pvajoute int) {
@@ -88,10 +112,10 @@ func initCharacter() User {
 	classe = strings.TrimSpace(classe)
 	switch classe {
 	case "nain":
-		return User{nom, "Nain", 1, 60, 120, []Inventaire{}, 0, 10, []int{1, 1}, 100, 2}
+		return User{nom, "Nain", 1, 60, 120, []Inventaire{}, 0, 10, []int{1, 1}, 100, 2, PieceEquipement{}}
 	case "assassin":
-		return User{nom, "Assassin", 1, 50, 100, []Inventaire{}, 0, 10, []int{1, 1}, 100, 4}
+		return User{nom, "Assassin", 1, 50, 100, []Inventaire{}, 0, 10, []int{1, 1}, 100, 4, PieceEquipement{}}
 	default:
-		return User{nom, "elf", 1, 40, 80, []Inventaire{Inventaire{"potion de soin", 3}}, 0, 10, []int{1, 1}, 100, 2}
+		return User{nom, "elf", 1, 40, 80, []Inventaire{Inventaire{"potion de soin", 3}}, 1, 10, []int{1, 1}, 100, 2, PieceEquipement{}}
 	}
 }

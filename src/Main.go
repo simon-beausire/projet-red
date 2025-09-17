@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -55,10 +56,10 @@ func ToUpper(s string) string {
 }
 
 func (u *User) isDead() {
-	if u.PdvActuel == 0 {
+	if u.PdvActuel <= 0 {
 		println("vous etes Mort vos points de vie maximum sont diviser par 2")
-		u.PdvActuel = u.PdvMax / 2
 		u.PdvMax = u.PdvMax / 2
+		u.PdvActuel = u.PdvMax / 2
 	}
 }
 
@@ -130,9 +131,12 @@ func (u *User) commande(tabSalle *[][]Salles) {
 			u.Affichage(*tabSalle)
 		case "takepot":
 			if u.inInventaire("potion de soin") >= 0 {
-				u.potionSoin()
-				u.AffichageInventaire()
-				println("vous avez utiliser une potion de soin")
+				if u.potionSoin() {
+					u.AffichageInventaire()
+					println("vous avez utiliser une potion de soin")
+				} else {
+					i += 1
+				}
 			} else {
 				fmt.Println("Vous ne possedez aucune potion de soin dans votre inventaire")
 				i += 1
@@ -154,6 +158,19 @@ func (u *User) commande(tabSalle *[][]Salles) {
 
 		case "quiter":
 			return
+		case "marchand":
+			u.marchand(tabSalle)
+			i += 1
+		case "forgeron":
+			u.forgeron(tabSalle)
+			i += 1
+		case "skill":
+			switch split[1] {
+			case "coupdepoing":
+				index, _ := strconv.Atoi(split[2])
+				u.coupDePoing(tabSalle, index-1)
+			}
+		case "pass":
 		default:
 			i += 1
 		}
@@ -170,7 +187,6 @@ func main() {
 		{Salles{"", false, false, false, false, []Monstre{}, false}, Salles{"", false, false, false, false, []Monstre{}, false}, Salles{"", false, false, false, false, []Monstre{}, false}},
 	}
 	Joueur := initCharacter()
-	fmt.Println(Joueur.InventaireJoueur)
 	Joueur.Affichage(tabSalle)
 	Joueur.commande(&tabSalle)
 }
