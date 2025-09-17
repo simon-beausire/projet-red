@@ -141,6 +141,11 @@ func (u *User) commande(tabSalle *[][]Salles) {
 				fmt.Println("Vous ne possedez aucune potion de soin dans votre inventaire")
 				i += 1
 			}
+		case "poisonpot":
+			if !u.potionpoison(tabSalle) {
+				i += 1
+				fmt.Println("Vous ne possedez pas de potion de poison")
+			}
 		case "accessinventory":
 			u.AffichageInventaire()
 			i += 1
@@ -148,6 +153,7 @@ func (u *User) commande(tabSalle *[][]Salles) {
 			u.Affichage(*tabSalle)
 			i += 1
 		case "displayinfo":
+			i += 1
 			if u.Classe == "Nain" {
 				u.displayInfoNain()
 			} else if u.Classe == "Assassin" {
@@ -168,7 +174,7 @@ func (u *User) commande(tabSalle *[][]Salles) {
 			switch split[1] {
 			case "coupdepoing":
 				index, _ := strconv.Atoi(split[2])
-				u.coupDePoing(tabSalle, index-1)
+				u.degatsMonstre("Coup de poing", tabSalle, index-1, 2)
 			}
 		case "pass":
 		default:
