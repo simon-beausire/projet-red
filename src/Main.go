@@ -153,6 +153,9 @@ func (u *User) commande(tabSalle *[][]Salles) {
 		case "marchand":
 			u.marchand(tabSalle)
 			i += 1
+		case "forgeron":
+			u.forgeron(tabSalle)
+			i += 1
 		default:
 			i += 1
 		}
