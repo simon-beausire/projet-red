@@ -13,6 +13,15 @@ type Monstre struct {
 	poison      int
 }
 
+func (m *Monstre) MonstreisDead() bool {
+	if m.PdvActuel <= 0 {
+		println(m.Espece, " a succomber a ses blessures")
+		return true
+	} else {
+		return false
+	}
+}
+
 func initMonstre(espece string) Monstre {
 	switch espece {
 	case "orc":
@@ -71,4 +80,7 @@ func (u *User) attaqueMonstre(monstre Monstre, tabSalle *[][]Salles) {
 func (u *User) coupDePoing(tabSalle *[][]Salles, monstre int) {
 	(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre[monstre].PdvActuel -= 2
 	fmt.Println("vous infligez 2 points de degats a ", (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre[monstre].Espece)
+	if (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre[monstre].MonstreisDead() {
+		(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre = append((*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre[:monstre], (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre[monstre+1:]...)
+	}
 }

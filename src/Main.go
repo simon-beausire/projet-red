@@ -56,7 +56,7 @@ func ToUpper(s string) string {
 }
 
 func (u *User) isDead() {
-	if u.PdvActuel == 0 {
+	if u.PdvActuel <= 0 {
 		println("vous etes Mort vos points de vie maximum sont diviser par 2")
 		u.PdvMax = u.PdvMax / 2
 		u.PdvActuel = u.PdvMax / 2
