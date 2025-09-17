@@ -144,7 +144,14 @@ func (u *User) commande(tabSalle *[][]Salles) {
 			u.Affichage(*tabSalle)
 			i += 1
 		case "displayinfo":
-			u.displayInfo()
+			if u.Classe == "Nain" {
+				u.displayInfoNain()
+			} else if u.Classe == "Assassin" {
+				u.displayInfoAssassin()
+			} else {
+				u.displayInfoElfe()
+			}
+
 		case "quiter":
 			return
 		default:
