@@ -40,7 +40,6 @@ func (u *User) testAchat(prix int, NomObjet string) {
 		u.argentJoueur -= prix
 		fmt.Println("Vous avez acheter ", NomObjet, "en echange de ", prix, "pieces")
 	}
-
 }
 
 func (u *User) marchand(tabSalle *[][]Salles) {

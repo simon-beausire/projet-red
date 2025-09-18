@@ -8,9 +8,9 @@ import (
 )
 
 type PieceEquipement struct {
-	tete  []Inventaire
-	torse []Inventaire
-	pieds []Inventaire
+	tete  string
+	torse string
+	pieds string
 }
 
 type Inventaire struct {
@@ -31,6 +31,8 @@ type User struct {
 	argentJoueur      int
 	PointAction       int
 	Equipement        PieceEquipement
+	tour              int
+	skill             []string
 }
 
 func (u User) inInventaire(NomObjet string) int {
@@ -76,6 +78,40 @@ func (u *User) upgradeInventorySlot() bool {
 
 }
 
+func (u *User) equipement(equipement string) {
+	if u.inInventaire(equipement) > -1 {
+		switch equipement {
+		case "chapeau de l'aventurier":
+			if u.Equipement.tete == "" {
+				u.Equipement.tete = equipement
+				u.retirerInventaire("chapeau de l'aventurier", 1)
+			} else {
+				u.ajouterInventaire(u.Equipement.tete, 1)
+				u.Equipement.tete = equipement
+				u.retirerInventaire("chapeau de l'aventurier", 1)
+			}
+		case "tunique de l'aventurier":
+			if u.Equipement.tete == "" {
+				u.Equipement.tete = equipement
+				u.retirerInventaire("tunique de l'aventurier", 1)
+			} else {
+				u.ajouterInventaire(u.Equipement.tete, 1)
+				u.Equipement.tete = equipement
+				u.retirerInventaire("tunique de l'aventurier", 1)
+			}
+		case "bottes de l'aventurier":
+			if u.Equipement.tete == "" {
+				u.Equipement.tete = equipement
+				u.retirerInventaire("bottes de l'aventurier", 1)
+			} else {
+				u.ajouterInventaire(u.Equipement.tete, 1)
+				u.Equipement.tete = equipement
+				u.retirerInventaire("bottes de l'aventurier", 1)
+			}
+		}
+	}
+}
+
 func (u *User) ajoutervie(pvajoute int) {
 	fmt.Println(u.PdvActuel)
 	u.PdvActuel += pvajoute
@@ -87,10 +123,21 @@ func (u *User) enlevervie(pvenlever int) {
 	u.isDead()
 }
 
-func (m *Monstre) enlevervie2(pvenlever int) {
-	m.PdvActuel -= pvenlever
+func (u *User) spellBook(sort string) {
+	switch sort {
+	case "bouledefeu":
+		u.skill = append(u.skill, sort)
+	}
 }
 
+func (u *User) verifierskill(sort string) bool {
+	for index := range u.skill {
+		if u.skill[index] == sort {
+			return true
+		}
+	}
+	return false
+}
 func initCharacter() User {
 	fmt.Print("\033[H\033[2J")
 	reader := bufio.NewReader(os.Stdin)
@@ -112,10 +159,10 @@ func initCharacter() User {
 	classe = strings.TrimSpace(classe)
 	switch classe {
 	case "nain":
-		return User{nom, "Nain", 1, 60, 120, []Inventaire{}, 0, 10, []int{1, 1}, 100, 2, PieceEquipement{}}
+		return User{nom, "Nain", 1, 60, 120, []Inventaire{}, 0, 10, []int{1, 1}, 100, 2, PieceEquipement{}, 0, []string{}}
 	case "assassin":
-		return User{nom, "Assassin", 1, 50, 100, []Inventaire{}, 0, 10, []int{1, 1}, 100, 4, PieceEquipement{}}
+		return User{nom, "Assassin", 1, 50, 100, []Inventaire{}, 0, 10, []int{1, 1}, 100, 4, PieceEquipement{}, 0, []string{}}
 	default:
-		return User{nom, "elf", 1, 40, 80, []Inventaire{Inventaire{"potion de soin", 3}}, 1, 10, []int{1, 1}, 100, 2, PieceEquipement{}}
+		return User{nom, "elf", 1, 40, 80, []Inventaire{Inventaire{"potion de soin", 3}}, 1, 10, []int{1, 1}, 100, 2, PieceEquipement{}, 0, []string{}}
 	}
 }

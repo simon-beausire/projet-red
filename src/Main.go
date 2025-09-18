@@ -173,14 +173,44 @@ func (u *User) commande(tabSalle *[][]Salles) {
 		case "skill":
 			switch split[1] {
 			case "coupdepoing":
-				index, _ := strconv.Atoi(split[2])
-				u.degatsMonstre("Coup de poing", tabSalle, index-1, 2)
+				if len(split) == 2 {
+					i += 1
+					fmt.Println("veuillez indiquer le monstre cibler")
+				} else {
+					index, _ := strconv.Atoi(split[2])
+					u.degatsMonstre("Coup de poing", tabSalle, index-1, 2)
+				}
+			case "bouledefeu":
+				if !u.verifierskill("bouledefeu") {
+					fmt.Println("Vous ne possedez pas le skill boule de feu")
+					i += 1
+				} else if len(split) == 2 {
+					i += 1
+					fmt.Println("veuillez indiquer le monstre cibler")
+				} else {
+					index, _ := strconv.Atoi(split[2])
+					u.degatsMonstre("Coup de poing", tabSalle, index-1, 5)
+				}
+			}
+		case "spellbook":
+			if split[1] == "bouledefeu" {
+				if u.inInventaire("sort boule de feu") == -1 {
+					fmt.Println("vous devez vous procurer le sort auprès du marchand")
+					i += 1
+				} else {
+					u.spellBook(split[1])
+					fmt.Println("vous avez appris le sort: Boule de feu")
+				}
+			} else {
+				i += 1
 			}
 		case "pass":
 		default:
 			i += 1
+
 		}
 	}
+	u.tour += 1
 	u.ActionMonstre(tabSalle)
 	u.commande(tabSalle)
 

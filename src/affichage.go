@@ -25,16 +25,17 @@ func centrer(esp int, chaine string) string {
 }
 
 func (u User) Affichage(tabSalle [][]Salles) {
-
 	fmt.Print("\033[H\033[2J")
 	niveau := fmt.Sprintf("%d", u.Niveau)
 	pdv := fmt.Sprintf("%d", u.PdvActuel)
+	tour := fmt.Sprintf("%d", u.tour)
 	TabStat := [][]string{
 		{"------------------------------"},
 		{Espace(29, "Nom Joueur", u.Nom)},
 		{Espace(29, "Classe", u.Classe)},
 		{Espace(29, "Niveau", niveau)},
 		{Espace(29, "Points de vie ", pdv)},
+		{Espace(29, "Nombre de tour", tour)},
 		{"------------------------------"},
 		{"                              "},
 		{"                              "},
@@ -44,14 +45,13 @@ func (u User) Affichage(tabSalle [][]Salles) {
 		{"displayinfo                   "},
 		{"quiter                        "},
 		{"takepot                       "},
-		{"                              "},
-		{"                              "},
-		{"                              "},
-		{"                              "},
-		{"                              "},
-		{"                              "},
-		{"                              "},
-		{"                              "},
+		{"poisonpot                     "},
+		{"retour                        "},
+		{"marchand                      "},
+		{"forgeron                      "},
+		{"skill coupdepoing lignemonstre"},
+		{"skill bouledefeu lignemonstre "},
+		{"pass                          "},
 		{"                              "},
 		{"                              "},
 		{"                              "},
@@ -115,16 +115,31 @@ func (u User) Affichage(tabSalle [][]Salles) {
 
 func (u User) AffichageInventaire() {
 	fmt.Print("\033[H\033[2J")
-	fmt.Println(u.InventaireJoueur)
+	niveau := fmt.Sprintf("%d", u.Niveau)
+	pdv := fmt.Sprintf("%d", u.PdvActuel)
+	tour := fmt.Sprintf("%d", u.tour)
 	TabStat := [][]string{
 		{"------------------------------"},
 		{Espace(29, "Nom Joueur", u.Nom)},
 		{Espace(29, "Classe", u.Classe)},
-		{Espace(29, "Niveau", string(u.Niveau+48))},
-		{Espace(29, "Points de vie ", string(u.PdvActuel+48))},
+		{Espace(29, "Niveau", niveau)},
+		{Espace(29, "Points de vie ", pdv)},
+		{Espace(29, "Nombre de tour", tour)},
 		{"------------------------------"},
 		{"                              "},
 		{"                              "},
+		{"goto direction                "},
+		{"accessinventory               "},
+		{"retour                        "},
+		{"displayinfo                   "},
+		{"quiter                        "},
+		{"takepot                       "},
+		{"poisonpot                     "},
+		{"retour                        "},
+		{"marchand                      "},
+		{"forgeron                      "},
+		{"skill coupdepoing lignemonstre"},
+		{"pass                          "},
 		{"                              "},
 		{"                              "},
 		{"                              "},
@@ -141,20 +156,7 @@ func (u User) AffichageInventaire() {
 		{"                              "},
 		{"                              "},
 		{"                              "},
-		{"                              "},
-		{"                              "},
-		{"                              "},
-		{"                              "},
-		{"                              "},
-		{"                              "},
-		{"                              "},
-		{"                              "},
-		{"                              "},
-		{"                              "},
-		{"                              "},
-		{"                              "},
-		{"                              "}}
-
+	}
 	for i := 0; i < 36; i++ {
 		for index := range TabStat[i] {
 			fmt.Print("|", TabStat[i][index], "|")
@@ -168,12 +170,15 @@ func (u User) AffichageInventaire() {
 
 func (u User) displayInfoNain() {
 	fmt.Print("\033[H\033[2J")
+	niveau := fmt.Sprintf("%d", u.Niveau)
+	pdv := fmt.Sprintf("%d", u.PdvActuel)
+	tour := fmt.Sprintf("%d", u.tour)
 	fmt.Println("------------------------------|", " ______   ___   _______  _______  ___      _______  __   __    ___   __    _  _______  _______ ")
 	fmt.Println(Espace(28, "Nom Joueur", u.Nom), "|", "|      | |   | |       ||       ||   |    |   _   ||  | |  |  |   | |  |  | ||       ||       |")
 	fmt.Println(Espace(28, "Classe", u.Classe), "|", "|  _    ||   | |  _____||    _  ||   |    |  |_|  ||  |_|  |  |   | |   |_| ||    ___||   _   |")
-	fmt.Println(Espace(28, "Niveau", string(u.Niveau+48)), "|", "| | |   ||   | | |_____ |   |_| ||   |    |       ||       |  |   | |       ||   |___ |  | |  |")
-	fmt.Println(Espace(30, "Points de vie ", string(u.PdvActuel+48)), "|", "| |_|   ||   | |_____  ||    ___||   |___ |       ||_     _|  |   | |  _    ||    ___||  |_|  |")
-	fmt.Println("------------------------------|", "|       ||   |  _____| ||   |    |       ||   _   |  |   |    |   | | | |   ||   |    |       |")
+	fmt.Println(Espace(28, "Niveau", niveau), "|", "| | |   ||   | | |_____ |   |_| ||   |    |       ||       |  |   | |       ||   |___ |  | |  |")
+	fmt.Println(Espace(30, "Points de vie ", pdv), "|", "| |_|   ||   | |_____  ||    ___||   |___ |       ||_     _|  |   | |  _    ||    ___||  |_|  |")
+	fmt.Println(Espace(29, "Nombre de tour", tour), "|       ||   |  _____| ||   |    |       ||   _   |  |   |    |   | | | |   ||   |    |       |")
 	fmt.Println("                              |", "|______| |___| |_______||___|    |_______||__| |__|  |___|    |___| |_|  |__||___|    |_______|")
 	fmt.Println("                              |")
 	fmt.Println("                              |")

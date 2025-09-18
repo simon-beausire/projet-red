@@ -11,6 +11,7 @@ type Monstre struct {
 	PdvActuel   int
 	PointAction int
 	poison      int
+	loot        string
 }
 
 func (m *Monstre) MonstreisDead(u *User, tabSalle *[][]Salles) bool {
@@ -25,12 +26,14 @@ func (m *Monstre) MonstreisDead(u *User, tabSalle *[][]Salles) bool {
 
 func initMonstre(espece string) Monstre {
 	switch espece {
-	case "orc":
-		return Monstre{"orc", 5, 5, 2, 0}
-	case "gobelin":
-		return Monstre{"gobelin", 9, 9, 3, 0}
+	case "corbeau":
+		return Monstre{"corbeau", 2, 2, 2, 0, "plume de corbeau"}
+	case "loup":
+		return Monstre{"loup", 3, 3, 3, 0, "fourrure de loup"}
+	case "troll":
+		return Monstre{"troll", 9, 9, 1, 0, "peau de troll"}
 	default:
-		return Monstre{"elfs", 2, 2, 1, 0}
+		return Monstre{"sanglier", 4, 4, 1, 0, "cuir de sanglier"}
 	}
 }
 
@@ -90,6 +93,11 @@ func (u *User) attaqueMonstre(monstre Monstre, tabSalle *[][]Salles) {
 func (u *User) degatsMonstre(attaque string, tabSalle *[][]Salles, index int, degats int) bool {
 	(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre[index].PdvActuel -= degats
 	if (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre[index].MonstreisDead(u, tabSalle) {
+		if u.ajouterInventaire((*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre[index].loot, 1) {
+			fmt.Println("1 ", (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre[index].loot, "ajouter a votre inventaire")
+			u.Niveau += 1
+		}
+		u.argentJoueur += 15
 		(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre = append((*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre[:index], (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre[index+1:]...)
 		return false
 	}
