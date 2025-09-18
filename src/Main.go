@@ -147,7 +147,6 @@ func (u *User) commande(tabSalle *[][]Salles) {
 		case "takepot":
 			if u.inInventaire("potion de soin") >= 0 {
 				if u.potionSoin() {
-					u.AffichageInventaire()
 					println("vous avez utiliser une potion de soin")
 				} else {
 					i += 1

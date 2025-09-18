@@ -135,9 +135,7 @@ func (u *User) equipement(equipement string) bool {
 }
 
 func (u *User) ajoutervie(pvajoute int) {
-	fmt.Println(u.PdvActuel)
 	u.PdvActuel += pvajoute
-	fmt.Println(u.PdvActuel)
 }
 
 func (u *User) enlevervie(pvenlever int) {
