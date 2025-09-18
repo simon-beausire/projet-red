@@ -81,6 +81,50 @@ func (u *User) upgradeInventorySlot() bool {
 	}
 
 }
+func (u *User) deplacementJoueur(tabSalle *[][]Salles, direction string) {
+	switch direction {
+	case "gauche":
+		if (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].gauche {
+			(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].personnage = false
+			(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]-1].personnage = true
+			u.emplacementJoueur = []int{u.emplacementJoueur[0], u.emplacementJoueur[1] - 1}
+		} else {
+			fmt.Println("Impossible d'aller a gauche")
+			u.commande(tabSalle)
+		}
+	case "droite":
+		if (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].droite {
+			(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].personnage = false
+			(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]+1].personnage = true
+			u.emplacementJoueur = []int{u.emplacementJoueur[0], u.emplacementJoueur[1] + 1}
+		} else {
+			fmt.Println("Impossible d'aller a droite")
+			u.commande(tabSalle)
+		}
+	case "haut":
+		if (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].haut {
+			(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].personnage = false
+			(*tabSalle)[u.emplacementJoueur[0]-1][u.emplacementJoueur[1]].personnage = true
+			u.emplacementJoueur = []int{u.emplacementJoueur[0] - 1, u.emplacementJoueur[1]}
+		} else {
+			fmt.Println("Impossible d'aller en haut")
+			u.commande(tabSalle)
+		}
+	case "bas":
+		if (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].bas {
+			(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].personnage = false
+			(*tabSalle)[u.emplacementJoueur[0]+1][u.emplacementJoueur[1]].personnage = true
+			u.emplacementJoueur = []int{u.emplacementJoueur[0] + 1, u.emplacementJoueur[1]}
+		} else {
+			fmt.Println("Impossible d'aller en bas")
+			u.commande(tabSalle)
+		}
+	default:
+		fmt.Println("Direction non reconnu")
+		u.commande(tabSalle)
+	}
+
+}
 
 func (u *User) equipement(equipement string) bool {
 	if u.inInventaire(equipement) > -1 {
@@ -179,7 +223,7 @@ func initCharacter() User {
 	classe = strings.TrimSpace(classe)
 	switch classe {
 	case "nain":
-		return User{nom, "Nain", 1, 120, 60, []Inventaire{Inventaire{"chapeau de l'aventurier", 1}}, 0, 10, []int{1, 1}, 100, 2, PieceEquipement{}, 0, []string{}, 0}
+		return User{nom, "Nain", 1, 120, 60, []Inventaire{}, 0, 10, []int{1, 1}, 100, 2, PieceEquipement{}, 0, []string{}, 0}
 	case "assassin":
 		return User{nom, "Assassin", 1, 100, 50, []Inventaire{}, 0, 10, []int{1, 1}, 100, 4, PieceEquipement{}, 0, []string{}, 0}
 	default:

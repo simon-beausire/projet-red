@@ -88,51 +88,6 @@ type Salles struct {
 	personnage bool
 }
 
-func (u *User) deplacementJoueur(tabSalle *[][]Salles, direction string) {
-	switch direction {
-	case "gauche":
-		if (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].gauche {
-			(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].personnage = false
-			(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]-1].personnage = true
-			u.emplacementJoueur = []int{u.emplacementJoueur[0], u.emplacementJoueur[1] - 1}
-		} else {
-			fmt.Println("Impossible d'aller a gauche")
-			u.commande(tabSalle)
-		}
-	case "droite":
-		if (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].droite {
-			(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].personnage = false
-			(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]+1].personnage = true
-			u.emplacementJoueur = []int{u.emplacementJoueur[0], u.emplacementJoueur[1] + 1}
-		} else {
-			fmt.Println("Impossible d'aller a droite")
-			u.commande(tabSalle)
-		}
-	case "haut":
-		if (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].haut {
-			(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].personnage = false
-			(*tabSalle)[u.emplacementJoueur[0]-1][u.emplacementJoueur[1]].personnage = true
-			u.emplacementJoueur = []int{u.emplacementJoueur[0] - 1, u.emplacementJoueur[1]}
-		} else {
-			fmt.Println("Impossible d'aller en haut")
-			u.commande(tabSalle)
-		}
-	case "bas":
-		if (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].bas {
-			(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].personnage = false
-			(*tabSalle)[u.emplacementJoueur[0]+1][u.emplacementJoueur[1]].personnage = true
-			u.emplacementJoueur = []int{u.emplacementJoueur[0] + 1, u.emplacementJoueur[1]}
-		} else {
-			fmt.Println("Impossible d'aller en bas")
-			u.commande(tabSalle)
-		}
-	default:
-		fmt.Println("Direction non reconnu")
-		u.commande(tabSalle)
-	}
-
-}
-
 func (u *User) commande(tabSalle *[][]Salles) {
 	for i := u.PointAction; i > 0; i-- {
 		reader := bufio.NewReader(os.Stdin)
