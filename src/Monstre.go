@@ -124,18 +124,19 @@ func (u *User) ActionMonstre(tabSalle *[][]Salles) {
 
 func (u *User) attaqueMonstre(monstre Monstre, tabSalle *[][]Salles) {
 	switch monstre.Espece {
-	case "orc":
-		u.enlevervie(2)
-		u.Affichage(*tabSalle)
-		fmt.Println("Un Orc vous inflige 2 de dégats")
-	case "gobelin":
-		u.enlevervie(1)
-		u.Affichage(*tabSalle)
-		fmt.Println("Un gobelin vous inflige 1 de dégats")
-	case "elfs":
+	case "corbeau":
+		u.enlevervie(4)
+		fmt.Println("Un corbeau vous inflige 2 de dégats")
+	case "loup":
 		u.enlevervie(3)
-		u.Affichage(*tabSalle)
+		fmt.Println("Un loup vous inflige 1 de dégats")
+	case "troll":
+		u.enlevervie(1)
 		fmt.Println("Un elf vous inflige 3 de dégats")
+	case "sanglier":
+		u.enlevervie(2)
+		fmt.Println("Un sanglier vous inflige 3 de dégats")
+
 	}
 }
 

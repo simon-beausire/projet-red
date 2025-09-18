@@ -181,10 +181,10 @@ func initCharacter() User {
 	classe = strings.TrimSpace(classe)
 	switch classe {
 	case "nain":
-		return User{nom, "Nain", 1, 60, 120, []Inventaire{Inventaire{"chapeau de l'aventurier", 1}}, 0, 10, []int{1, 1}, 100, 2, PieceEquipement{}, 0, []string{}, 0}
+		return User{nom, "Nain", 1, 120, 60, []Inventaire{Inventaire{"chapeau de l'aventurier", 1}}, 0, 10, []int{1, 1}, 100, 2, PieceEquipement{}, 0, []string{}, 0}
 	case "assassin":
-		return User{nom, "Assassin", 1, 50, 100, []Inventaire{}, 0, 10, []int{1, 1}, 100, 4, PieceEquipement{}, 0, []string{}, 0}
+		return User{nom, "Assassin", 1, 100, 50, []Inventaire{}, 0, 10, []int{1, 1}, 100, 4, PieceEquipement{}, 0, []string{}, 0}
 	default:
-		return User{nom, "elf", 1, 40, 80, []Inventaire{Inventaire{"potion de soin", 3}}, 1, 10, []int{1, 1}, 100, 2, PieceEquipement{}, 0, []string{}, 0}
+		return User{nom, "elf", 1, 80, 40, []Inventaire{Inventaire{"potion de soin", 3}}, 1, 10, []int{1, 1}, 100, 2, PieceEquipement{}, 0, []string{}, 0}
 	}
 }
