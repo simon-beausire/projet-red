@@ -27,6 +27,7 @@ func (u *User) potionpoison(tabSalle *[][]Salles) bool {
 		for index := range (*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre {
 			(*tabSalle)[u.emplacementJoueur[0]][u.emplacementJoueur[1]].monstre[index].poison += 3
 		}
+		u.retirerInventaire("potion de poison", 1)
 	}
 	return true
 }
@@ -127,8 +128,8 @@ func (u *User) forgeron(tabSalle *[][]Salles) {
 	fmt.Println("Bottes de l'aventurier")
 	fmt.Println("	-1 Fourrure de Loup")
 	fmt.Println("	-1 Cuir de Sanglier")
-	fmt.Print("Que voulez vous faire ? : ")
 	for true {
+		fmt.Print("Que voulez vous faire ? : ")
 		reader := bufio.NewReader(os.Stdin)
 		commande, _ := reader.ReadString('\n')
 		commande = strings.TrimSpace(commande)

@@ -8,6 +8,16 @@ import (
 	"strings"
 )
 
+func concactTabToString(tab []string) string {
+	r := ""
+	for index, mot := range tab {
+		if index != 0 {
+			r += " "
+		}
+		r += string(mot)
+	}
+	return r
+}
 func concactTab(tab1 []Monstre, tab2 []Monstre) []Monstre {
 	for _, monstre := range tab2 {
 		tab1 = append(tab1, monstre)
@@ -57,7 +67,12 @@ func ToUpper(s string) string {
 
 func (u *User) isDead() {
 	if u.PdvActuel <= 0 {
+		if u.nbrMort == 3 {
+			fmt.Println("Vous etes mort DEFINITIVEMENT")
+			return
+		}
 		println("vous etes Mort vos points de vie maximum sont diviser par 2")
+		u.nbrMort += 1
 		u.PdvMax = u.PdvMax / 2
 		u.PdvActuel = u.PdvMax / 2
 	}
@@ -145,6 +160,8 @@ func (u *User) commande(tabSalle *[][]Salles) {
 			if !u.potionpoison(tabSalle) {
 				i += 1
 				fmt.Println("Vous ne possedez pas de potion de poison")
+			} else {
+				fmt.Println("La potion de poison a bien été utilisé")
 			}
 		case "accessinventory":
 			u.AffichageInventaire()
@@ -193,15 +210,19 @@ func (u *User) commande(tabSalle *[][]Salles) {
 				}
 			}
 		case "spellbook":
-			if split[1] == "bouledefeu" {
+			if concactTabToString(split[1:]) == "bouledefeu" {
 				if u.inInventaire("sort boule de feu") == -1 {
 					fmt.Println("vous devez vous procurer le sort auprès du marchand")
 					i += 1
 				} else {
-					u.spellBook(split[1])
+					u.spellBook(concactTabToString(split[1:]))
 					fmt.Println("vous avez appris le sort: Boule de feu")
 				}
 			} else {
+				i += 1
+			}
+		case "equipement":
+			if !u.equipement(concactTabToString(split[1:])) {
 				i += 1
 			}
 		case "pass":
@@ -217,10 +238,10 @@ func (u *User) commande(tabSalle *[][]Salles) {
 }
 func main() {
 	tabSalle := [][]Salles{
-		{Salles{"", false, false, false, false, []Monstre{}, false}, Salles{"", false, true, false, false, []Monstre{}, false}, Salles{"", false, false, false, false, []Monstre{}, false}},
-		{Salles{"", false, false, false, true, []Monstre{}, false}, Salles{"Fontaine de depart", true, true, true, false, []Monstre{initMonstre("orc")}, true}, Salles{"", false, false, false, false, []Monstre{initMonstre("orc")}, false}},
-		{Salles{"", false, false, false, false, []Monstre{}, false}, Salles{"", true, false, false, false, []Monstre{}, false}, Salles{"", false, false, false, false, []Monstre{}, false}},
-		{Salles{"", false, false, false, false, []Monstre{}, false}, Salles{"", false, false, false, false, []Monstre{}, false}, Salles{"", false, false, false, false, []Monstre{}, false}},
+		{Salles{"Jardin des oubliés ", false, true, false, false, []Monstre{initMonstre("loup"), initMonstre("troll"), initMonstre("corbeau")}, false}, Salles{"Couloir nord", false, true, false, true, []Monstre{initMonstre("sanglier"), initMonstre("loup"), initMonstre("corbeau")}, false}, Salles{"Grenier Obscur", false, true, true, false, []Monstre{initMonstre("troll"), initMonstre("sanglier"), initMonstre("corbeau")}, false}},
+		{Salles{"Couloir ouest", true, false, false, true, []Monstre{initMonstre("loup"), initMonstre("troll"), initMonstre("sanglier")}, false}, Salles{"Fontaine de depart", true, true, true, false, []Monstre{initMonstre("sanglier")}, true}, Salles{"Couloir est", true, false, false, false, []Monstre{initMonstre("corbeau"), initMonstre("sanglier"), initMonstre("loup")}, false}},
+		{Salles{"Salle de Musique", false, true, false, true, []Monstre{initMonstre("troll"), initMonstre("loup"), initMonstre("sanglier")}, false}, Salles{"Couloir sud", true, false, false, true, []Monstre{initMonstre("corbeau"), initMonstre("troll"), initMonstre("loup")}, false}, Salles{"Salle du Banquet", false, true, true, false, []Monstre{initMonstre("sanglier"), initMonstre("corbeau"), initMonstre("troll")}, false}},
+		{Salles{"Bureau du Maître ", true, false, false, true, []Monstre{initMonstre("loup"), initMonstre("sanglier"), initMonstre("corbeau")}, false}, Salles{" Caves Humides", false, false, true, false, []Monstre{initMonstre("troll"), initMonstre("sanglier"), initMonstre("loup")}, false}, Salles{"Chambre d'Amis", true, false, false, false, []Monstre{initMonstre("corbeau"), initMonstre("troll"), initMonstre("sanglier")}, false}},
 	}
 	Joueur := initCharacter()
 	Joueur.Affichage(tabSalle)

@@ -140,7 +140,7 @@ func (u User) AffichageInventaire() {
 		{"forgeron                      "},
 		{"skill coupdepoing lignemonstre"},
 		{"pass                          "},
-		{"                              "},
+		{"equipement nomdel'equipement  "},
 		{"                              "},
 		{"                              "},
 		{"                              "},

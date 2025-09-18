@@ -8,9 +8,12 @@ import (
 )
 
 type PieceEquipement struct {
-	tete  string
-	torse string
-	pieds string
+	tete       string
+	bonusTete  int
+	torse      string
+	bonusTorse int
+	pieds      string
+	bonusPied  int
 }
 
 type Inventaire struct {
@@ -33,6 +36,7 @@ type User struct {
 	Equipement        PieceEquipement
 	tour              int
 	skill             []string
+	nbrMort           int
 }
 
 func (u User) inInventaire(NomObjet string) int {
@@ -78,7 +82,7 @@ func (u *User) upgradeInventorySlot() bool {
 
 }
 
-func (u *User) equipement(equipement string) {
+func (u *User) equipement(equipement string) bool {
 	if u.inInventaire(equipement) > -1 {
 		switch equipement {
 		case "chapeau de l'aventurier":
@@ -87,29 +91,47 @@ func (u *User) equipement(equipement string) {
 				u.retirerInventaire("chapeau de l'aventurier", 1)
 			} else {
 				u.ajouterInventaire(u.Equipement.tete, 1)
+				u.PdvMax -= u.Equipement.bonusTete
 				u.Equipement.tete = equipement
 				u.retirerInventaire("chapeau de l'aventurier", 1)
 			}
-		case "tunique de l'aventurier":
+			fmt.Println(equipement, "Ajouter a votre equipement ")
+			u.PdvMax += 10
+			u.Equipement.bonusTete = 10
+		case "tuniquedel'aventurier":
 			if u.Equipement.tete == "" {
 				u.Equipement.tete = equipement
 				u.retirerInventaire("tunique de l'aventurier", 1)
 			} else {
 				u.ajouterInventaire(u.Equipement.tete, 1)
+				u.PdvMax -= u.Equipement.bonusTorse
 				u.Equipement.tete = equipement
 				u.retirerInventaire("tunique de l'aventurier", 1)
 			}
-		case "bottes de l'aventurier":
+			fmt.Println(equipement, "Ajouter a votre equipement ")
+			u.PdvMax += 25
+			u.Equipement.bonusTete = 25
+		case "bottesdel'aventurier":
 			if u.Equipement.tete == "" {
 				u.Equipement.tete = equipement
 				u.retirerInventaire("bottes de l'aventurier", 1)
 			} else {
 				u.ajouterInventaire(u.Equipement.tete, 1)
+				u.PdvMax -= u.Equipement.bonusPied
 				u.Equipement.tete = equipement
 				u.retirerInventaire("bottes de l'aventurier", 1)
 			}
+			fmt.Println(equipement, "Ajouter a votre equipement ")
+			u.PdvMax += 15
+			u.Equipement.bonusTete = 15
+		default:
+			return false
 		}
+	} else {
+		fmt.Println("Vous ne possedez pas cette objet dans votre inventaire")
+		return false
 	}
+	return true
 }
 
 func (u *User) ajoutervie(pvajoute int) {
@@ -159,10 +181,10 @@ func initCharacter() User {
 	classe = strings.TrimSpace(classe)
 	switch classe {
 	case "nain":
-		return User{nom, "Nain", 1, 60, 120, []Inventaire{}, 0, 10, []int{1, 1}, 100, 2, PieceEquipement{}, 0, []string{}}
+		return User{nom, "Nain", 1, 60, 120, []Inventaire{Inventaire{"chapeau de l'aventurier", 1}}, 0, 10, []int{1, 1}, 100, 2, PieceEquipement{}, 0, []string{}, 0}
 	case "assassin":
-		return User{nom, "Assassin", 1, 50, 100, []Inventaire{}, 0, 10, []int{1, 1}, 100, 4, PieceEquipement{}, 0, []string{}}
+		return User{nom, "Assassin", 1, 50, 100, []Inventaire{}, 0, 10, []int{1, 1}, 100, 4, PieceEquipement{}, 0, []string{}, 0}
 	default:
-		return User{nom, "elf", 1, 40, 80, []Inventaire{Inventaire{"potion de soin", 3}}, 1, 10, []int{1, 1}, 100, 2, PieceEquipement{}, 0, []string{}}
+		return User{nom, "elf", 1, 40, 80, []Inventaire{Inventaire{"potion de soin", 3}}, 1, 10, []int{1, 1}, 100, 2, PieceEquipement{}, 0, []string{}, 0}
 	}
 }
