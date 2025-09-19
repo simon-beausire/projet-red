@@ -51,7 +51,6 @@ func (u *User) marchand(tabSalle *[][]Salles) {
 	fmt.Println("potion de Poison : 6 pieces ")
 	fmt.Println("Sort Boule de Feu : 25 pieces ")
 	fmt.Println("UpgradeInventaire : 30 pieces ")
-	fmt.Println("Clé du Donjon : 100 pieces ")
 	fmt.Println("----------VENDRE----------")
 	fmt.Println("Plume de Corbeau: 1 piece")
 	fmt.Println("Cuir de sanglier: 3 piece")
@@ -83,8 +82,6 @@ func (u *User) marchand(tabSalle *[][]Salles) {
 				}
 			case "sort":
 				u.testAchat(25, "sort boule de feu")
-			case "clé":
-				u.testAchat(100, "cle du donjon")
 			}
 		case "vendre":
 			switch split[1] {
