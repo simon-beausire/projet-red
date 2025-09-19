@@ -58,8 +58,8 @@ func (u *User) marchand(tabSalle *[][]Salles) {
 	fmt.Println("Peau de troll: 7 piece")
 	fmt.Println("Pour acheter un objet: acheter nomobjet")
 	fmt.Println("Pour vendre un objet: vendre nomobjet")
-	fmt.Print("Que voulez vous faire ? : ")
 	for true {
+		fmt.Print("Que voulez vous faire ? : ")
 		reader := bufio.NewReader(os.Stdin)
 		commande, _ := reader.ReadString('\n')
 		commande = strings.TrimSpace(commande)

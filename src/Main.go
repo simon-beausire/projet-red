@@ -64,18 +64,22 @@ func ToUpper(s string) string {
 	}
 	return r
 }
+func fermer() {
+	return
+}
 
-func (u *User) isDead() {
+func (u *User) isDead() bool {
 	if u.PdvActuel <= 0 {
-		if u.nbrMort == 3 {
+		if u.nbrMort == 1 {
 			fmt.Println("Vous etes mort DEFINITIVEMENT")
-			return
+			return true
 		}
 		println("vous etes Mort vos points de vie maximum sont diviser par 2")
 		u.nbrMort += 1
 		u.PdvMax = u.PdvMax / 2
 		u.PdvActuel = u.PdvMax / 2
 	}
+	return false
 }
 
 type Salles struct {
@@ -89,6 +93,9 @@ type Salles struct {
 }
 
 func (u *User) commande(tabSalle *[][]Salles) {
+	if u.isDead() {
+		return
+	}
 	for i := u.PointAction; i > 0; i-- {
 		reader := bufio.NewReader(os.Stdin)
 		fmt.Print("Action restante: ", rune(i), " | Que voulez vous faire ? : ")

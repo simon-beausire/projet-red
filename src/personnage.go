@@ -142,7 +142,7 @@ func (u *User) equipement(equipement string) bool {
 			fmt.Println(equipement, "Ajouter a votre equipement ")
 			u.PdvMax += 10
 			u.Equipement.bonusTete = 10
-		case "tuniquedel'aventurier":
+		case "tunique de l'aventurier":
 			if u.Equipement.tete == "" {
 				u.Equipement.tete = equipement
 				u.retirerInventaire("tunique de l'aventurier", 1)
@@ -155,7 +155,7 @@ func (u *User) equipement(equipement string) bool {
 			fmt.Println(equipement, "Ajouter a votre equipement ")
 			u.PdvMax += 25
 			u.Equipement.bonusTete = 25
-		case "bottesdel'aventurier":
+		case "bottes de l'aventurier":
 			if u.Equipement.tete == "" {
 				u.Equipement.tete = equipement
 				u.retirerInventaire("bottes de l'aventurier", 1)
@@ -224,7 +224,7 @@ func initCharacter() User {
 	classe = ToLower(classe)
 	switch classe {
 	case "nain":
-		return User{nom, "Nain", 1, 120, 60, []Inventaire{}, 0, 10, []int{1, 1}, 100, 2, PieceEquipement{}, 0, []string{}, 0}
+		return User{nom, "Nain", 1, 120, 60, []Inventaire{Inventaire{"bottes de l'aventurier", 1}, Inventaire{"potion de soin", 5}}, 0, 10, []int{1, 1}, 100, 2, PieceEquipement{}, 0, []string{}, 0}
 	case "assassin":
 		return User{nom, "Assassin", 1, 100, 50, []Inventaire{}, 0, 10, []int{1, 1}, 100, 4, PieceEquipement{}, 0, []string{}, 0}
 	default:
