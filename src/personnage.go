@@ -221,6 +221,7 @@ func initCharacter() User {
 	fmt.Print("Choissisez votre classe : ")
 	classe, _ := reader.ReadString('\n')
 	classe = strings.TrimSpace(classe)
+	classe = ToLower(classe)
 	switch classe {
 	case "nain":
 		return User{nom, "Nain", 1, 120, 60, []Inventaire{}, 0, 10, []int{1, 1}, 100, 2, PieceEquipement{}, 0, []string{}, 0}
